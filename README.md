@@ -37,8 +37,8 @@ src/
    ├── icons/             # Ícones
    ├── js/                # Arquivos javascript
    ├── index.html         # Página principal
-   ├── manifest.json      # Possibilita o site ser "instalável" funcionar offline
-   └── service-worker.js  # Possibilita o site ser "instalável" funcionar offline
+   ├── manifest.json      # Possibilita o site ser "instalável" e funcionar offline
+   └── service-worker.js  # Possibilita o site ser "instalável" e funcionar offline
 ```
 
 🤝 Contribuições
