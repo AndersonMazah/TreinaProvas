@@ -1,0 +1,41 @@
+.filtros-prova {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin: 1rem auto;
+    flex-wrap: wrap;
+}
+
+.filtros-prova label {
+    font-weight: normal;
+}
+
+#blocoQuestaoProva p {
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+}
+
+#blocoQuestaoProva div {
+    margin-bottom: 0.6rem;
+    line-height: 1.4;
+}
+
+#blocoQuestaoProva label {
+    margin-left: 0.4rem;
+}
+
+.opcao-correta {
+    border: 2px solid green;
+    border-radius: 6px;
+    padding: 4px;
+    background-color: #eaffea;
+}
+
+.justificativa-prova {
+    margin-top: 1rem;
+    padding: 0.8rem;
+    background-color: #f9f9f9;
+    border-left: 4px solid #007bff;
+    font-style: italic;
+    color: #333;
+}

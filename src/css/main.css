@@ -1,0 +1,32 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: #f5f5f5;
+    color: #333;
+}
+
+header {
+    background-color: #2c3e50;
+    color: white;
+    padding: 1rem;
+}
+
+main {
+    padding: 1rem;
+}
+
+.ocultar {
+    display: none;
+}
+
+.desabilitar {
+    pointer-events: none;
+    opacity: 0.6;
+    background-color: #eee;
+    color: #555;
+}

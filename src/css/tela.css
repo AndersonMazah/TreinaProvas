@@ -1,0 +1,28 @@
+.tela {
+    display: none;
+}
+
+.tela_ativa {
+    display: block;
+}
+
+.linha-filtro {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0.5rem auto;
+    gap: 1rem;
+    max-width: 600px;
+}
+
+.linha-filtro label {
+    width: 100px;
+    text-align: right;
+    font-weight: bold;
+}
+
+.linha-filtro select {
+    flex: 1;
+    max-width: 300px;
+    padding: 0.5rem;
+}

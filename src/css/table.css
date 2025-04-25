@@ -1,0 +1,26 @@
+.tabela-lista {
+    border-collapse: collapse;
+    max-width: 750px;
+    width: 100%;
+    margin: 1rem auto;
+}
+
+.tabela-lista th,
+.tabela-lista td {
+    border: 1px solid #ccc;
+    padding: 0.5rem;
+    text-align: left;
+}
+
+.tabela-lista th {
+    background-color: #eee;
+    cursor: pointer;
+}
+
+.tabela-lista th:hover {
+    background-color: #ddd;
+}
+
+.tabela-lista th.acoes {
+    width: 100px;
+}

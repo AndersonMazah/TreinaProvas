@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Treina Provas</title>
+  <link rel="stylesheet" href="css/prova.css">
+  <link rel="stylesheet" href="css/table.css">
+  <link rel="stylesheet" href="css/componentes.css">
+  <link rel="stylesheet" href="css/tela.css">
+  <link rel="stylesheet" href="css/modal.css">
+  <link rel="stylesheet" href="css/menu.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icons/icon-192.png">
+  <meta name="theme-color" content="#2c3e50">
+  <link rel="icon" type="image/x-icon" href="icons/favicon.ico">
+</head>
+
+<body>
+  <header>
+    <h1>Treina Provas</h1>
+    <nav>
+      <div id="menuCadastro" class="dropdown">
+        <button class="dropdown-button">Cadastro</button>
+        <div class="dropdown-content">
+          <button onclick="exibirTela('telaCadMateria')">Cad. Matéria</button>
+          <button id="bntMenuCadAula" onclick="exibirTela('telaCadAula')">Cad. Aula</button>
+          <button id="bntMenuCadQuestao" onclick="exibirTela('telaCadQuestao')">Cad. Questão</button>
+          <button onclick="exibirTela('tela-backup')">Backup e Restauração</button>
+        </div>
+      </div>
+      <button id="bntMenuProva" onclick="exibirTela('telaProvaSelecionar')">Prova</button>
+    </nav>
+  </header>
+
+  <main>
+
+    <section id="telaCadMateria" class="tela">
+      <div class="linha-filtro">
+        <h2>Cadastro de Matéria</h2>
+      </div>
+      <div class="linha-filtro">
+        <button onclick="abrirModalMateria()">Novo</button>
+      </div>
+      <table id="tabelaMaterias" class="tabela-lista">
+        <thead>
+          <tr>
+            <th onclick="ordenarMaterias()">Matérias</th>
+            <th class="acoes">Ações</th>
+          </tr>
+        </thead>
+        <tbody id="corpoTabelaMaterias"></tbody>
+      </table>
+      <p id="msgSemRegistroDeMateria" class="mensagem-vazia">Nenhum registro encontrado.</p>
+      <div id="modalMateria" class="modal ocultar">
+        <div class="modal_conteudo">
+          <h3 id="modalTituloMateria"></h3>
+          <input type="text" id="inputModalMateria" placeholder="Nome da Matéria" />
+          <div class="linha-filtro" class="linha-filtro" style="margin-top: 1rem;">
+            <button onclick="salvarMateria()">Salvar</button>
+            <button id="btnExcluirMateria" onclick="abrirModalConfirmarExclusaoMateria()">Excluir</button>
+            <button onclick="fecharModalMateria()">Cancelar</button>
+          </div>
+        </div>
+      </div>
+      <div id="modalConfirmarExclusaoMateria" class="modal ocultar">
+        <div class="modal_conteudo">
+          <p>Confirma exclusão da Matéria?</p>
+          <div class="linha-filtro" style="margin-top: 1rem;">
+            <button onclick="executarExclusaoMateria()">Sim</button>
+            <button onclick="fecharModalConfirmarExclusaoMateria()" autofocus>Não</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="telaCadAula" class="tela">
+      <div class="linha-filtro">
+        <h2>Cadastro de Aula</h2>
+      </div>
+      <div class="linha-filtro">
+        <label for="selectMateriaTelaAula">Matéria:</label>
+        <select id="selectMateriaTelaAula" onchange="listarAulasDaMateria()"></select>
+      </div>
+      <div class="linha-filtro">
+        <button onclick="abrirModalAula()">Novo</button>
+      </div>
+      <table id="tabelaAulas" class="tabela-lista">
+        <thead>
+          <tr>
+            <th onclick="ordenarAulas()">Aulas</th>
+            <th class="acoes">Ações</th>
+          </tr>
+        </thead>
+        <tbody id="corpoTabelaAulas"></tbody>
+      </table>
+      <p id="msgSemRegistroDeAula" class="mensagem-vazia">Nenhum registro encontrado.</p>
+      <div id="modalAula" class="modal ocultar">
+        <div class="modal_conteudo">
+          <h3 id="modalTituloAula"></h3>
+          <input type="text" id="inputModalAula" placeholder="Nome da Aula" />
+          <div class="linha-filtro" style="margin-top: 1rem;">
+            <button onclick="salvarAula()">Salvar</button>
+            <button id="btnExcluirAula" onclick="abrirModalConfirmarExclusaoAula()">Excluir</button>
+            <button onclick="fecharModalAula()">Cancelar</button>
+          </div>
+        </div>
+      </div>
+      <div id="modalConfirmarExclusaoAula" class="modal ocultar">
+        <div class="modal_conteudo">
+          <p>Confirma exclusão da Aula?</p>
+          <div class="linha-filtro" style="margin-top: 1rem;">
+            <button onclick="executarExclusaoAula()">Sim</button>
+            <button onclick="fecharModalConfirmarExclusaoAula()" autofocus>Não</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="telaCadQuestao" class="tela">
+      <div class="linha-filtro">
+        <h2>Cadastro de Questões</h2>
+      </div>
+      <div class="linha-filtro">
+        <label for="selectMateriaTelaQuestao">Matéria:</label>
+        <select id="selectMateriaTelaQuestao" onchange="preencherSelectAulaTelaQuestao()"></select>
+      </div>
+      <div class="linha-filtro">
+        <label for="selectAulaTelaQuestao">Aula:</label>
+        <select id="selectAulaTelaQuestao" onchange="listarQuestoesDoAula()"></select>
+      </div>
+      <div class="linha-filtro">
+        <button id="idBtnNovoTelaQuestao" onclick="abrirModalQuestao()">Novo</button>
+      </div>
+      <table id="tabelaQuestoes" class="tabela-lista">
+        <thead>
+          <tr>
+            <th onclick="ordenarQuestoes()">Enunciados</th>
+            <th style="width: 200px;">Ações</th>
+          </tr>
+        </thead>
+        <tbody id="corpoTabelaQuestoes"></tbody>
+      </table>
+      <p id="msgSemRegistroDeQuestao" class="mensagem-vazia">Nenhum registro encontrado.</p>
+      <div id="modalQuestao" class="modal ocultar">
+        <div class="modal_conteudo">
+          <h3 id="modalTituloQuestao"></h3>
+          <div class="linha-filtro">
+            <label for="inputModalQuestaoEnunciado">Enunciado:</label>
+            <textarea id="inputModalQuestaoEnunciado" style="width: 534px; height: 120px;"></textarea>
+          </div>
+          <div class="linha-filtro">
+            <label for="inputModalQuestaoJustificativa">Justificativa:</label>
+            <textarea id="inputModalQuestaoJustificativa" style="width: 534px; height: 120px;"></textarea>
+          </div>
+          <div class="linha-filtro" style="margin-top: 1rem;">
+            <button onclick="salvarModalQuestao()">Salvar</button>
+            <button id="btnExcluirQuestao" onclick="abrirModalConfirmarExclusaoQuestao()">Excluir</button>
+            <button onclick="fecharModalQuestao()">Cancelar</button>
+          </div>
+        </div>
+      </div>
+      <div id="modalConfirmarExclusaoQuestao" class="modal ocultar">
+        <div class="modal_conteudo">
+          <p>Confirma exclusão da Questão?</p>
+          <div class="linha-filtro" style="margin-top: 1rem;">
+            <button onclick="executarExclusaoQuestao()">Sim</button>
+            <button onclick="fecharModalConfirmarExclusaoQuestao()" autofocus>Não</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="modalListaDeOpcoes" class="modal ocultar">
+        <div class="modal_conteudo">
+          <h3>Opções da Questão</h3>
+          <div class="linha-filtro">
+            <textarea id="enunciadoSomenteLeitura" class="desabilitar" style="width: 434px; height: 120px;"></textarea>
+          </div>
+          <div class="linha-filtro">
+            <button id="idBtnNovoTelaListaDeOpcao" onclick="abrirModalCadOpcao()">Novo</button>
+            <button onclick="fecharModalListaDeOpcoes()">Sair</button>
+          </div>
+          <table class="tabela-lista">
+            <thead>
+              <tr>
+                <th onclick="ordenarOpcoes()">Texto</th>
+                <th>Correta?</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody id="corpoTabelaOpcoes"></tbody>
+          </table>
+          <p id="msgSemRegistroDeOpcao" class="mensagem-vazia">Nenhum registro encontrado.</p>
+        </div>
+      </div>
+      <div id="modalCadOpcao" class="modal ocultar">
+        <div class="modal_conteudo">
+          <h3 id="modalTituloCadOpcao"></h3>
+          <div style="margin-bottom: 1rem;">
+            <input type="text" id="textoOpcao" placeholder="Texto da Opção de Questão" />
+            <div class="linha-filtro">
+              <label style="display: inline-block; margin-left: 10px;">
+                <input type="checkbox" id="corretaOpcao" /> Correta
+              </label>
+            </div>
+            <div class="linha-filtro">
+              <button onclick="salvarOpcao()">Salvar</button>
+              <button id="btnExcluirOpcao" onclick="abrirModalConfirmarExclusaoOpcao()">Excluir</button>
+              <button onclick="fecharModalCadOpcao()">Sair</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="modalConfirmarExclusaoOpcao" class="modal ocultar">
+        <div class="modal_conteudo">
+          <p>Confirma exclusão da Opção?</p>
+          <div class="linha-filtro" style="margin-top: 1rem;">
+            <button onclick="executarExclusaoOpcao()">Sim</button>
+            <button onclick="fecharModalConfirmarExclusaoOpcao()" autofocus>Não</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="tela-backup" class="tela">
+      <div class="linha-filtro">
+        <h2>Criar Backup</h2>
+      </div>
+      <div class="linha-filtro">
+        <button onclick="criarBackupXML()">Criar Backup</button>
+      </div><br /><br /><br /><br /><br />
+      <div class="linha-filtro">
+        <h2>Restaurar Backup</h2>
+      </div>
+      <div class="linha-filtro">
+        <label for="inputRestoreXML">Restaurar de Arquivo (.xml):</label>
+        <input type="file" id="inputRestoreXML" accept=".xml" />
+      </div>
+      <div class="linha-filtro">
+        <button onclick="restaurarBackupXML()">Restaurar Backup</button>
+      </div>
+    </section>
+
+    <section id="telaProvaSelecionar" class="tela">
+      <div class="linha-filtro">
+        <h2>Configuração da Prova</h2>
+      </div>
+      <div class="linha-filtro">
+        <label for="selectMateriaTelaProva">Matéria:</label>
+        <select id="selectMateriaTelaProva" onchange="carregarAulasParaProva()"></select>
+      </div>
+      <div class="filtros-prova">
+        <label>
+          <input type="checkbox" id="filtroIgnorarDominadas" onchange="carregarAulasParaProva()">
+          Ignorar questões dominadas
+        </label>
+        <label>
+          <input type="checkbox" id="filtroMaisErros" onchange="carregarAulasParaProva()">
+          Apenas questões que mais errei
+        </label>
+        <label>
+          <input type="checkbox" id="filtroModoEstudo">
+          Modo estudo (sem tempo)
+        </label>
+      </div>
+      <table class="tabela-lista ocultar" id="tabelaAulasProva">
+        <thead>
+          <tr>
+            <th><input id="telaProvaSelecionarMarcarTodos" type="checkbox" onclick="marcarDesmarcarTodos(this)" /></th>
+            <th>Aula</th>
+            <th>Quantidade de Questões</th>
+          </tr>
+        </thead>
+        <tbody id="corpoTabelaAulasProva"></tbody>
+      </table>
+      <div class="linha-filtro">
+        <button id="btnIniciarProva" onclick="iniciarProva()" disabled>Iniciar Prova</button>
+      </div>
+    </section>
+
+    <section id="telaProvaExecutar" class="tela">
+      <button id="btnAnterior" onclick="navegarQuestao(-1)">Anterior</button>
+      <button id="btnProximo" onclick="navegarQuestao(1)">Próximo</button>
+      <button onclick="encerrarProva()">Encerrar Prova</button>
+      <div id="blocoBotaoCorreta" class="ocultar">
+        <button onclick="alternarCorreta()">Exibir opção correta</button>
+      </div>
+      <div id="blocoQuestaoProva"></div>
+      <div style="margin-top: 1rem; text-align: center;">
+        <div id="cronometroProva" style="text-align:center; font-weight:bold; margin-bottom:1rem;"></div>
+      </div>
+    </section>
+
+    <section id="telaProvaResultado" class="tela">
+      <div id="resultadoProva" style="text-align: center; margin-top: 2rem;"></div>
+    </section>
+
+  </main>
+  <script src="js/prova.js"></script>
+  <script src="js/backup_restore.js"></script>
+  <script src="js/cad_materia.js"></script>
+  <script src="js/cad_aula.js"></script>
+  <script src="js/cad_questao.js"></script>
+  <script src="js/cad_opcao.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    function verificarSeHabilitaMenuCadAula() {
+      const materias = carregarMaterias();
+      if (materias.length > 0) {
+        document.getElementById('bntMenuCadAula').classList.remove('desabilitar');
+      } else {
+        document.getElementById('bntMenuCadAula').classList.add('desabilitar');
+      }
+    }
+    function verificarSeHabilitaMenuCadQuestao() {
+      const aulas = carregarAulas();
+      if (aulas.length > 0) {
+        document.getElementById('bntMenuCadQuestao').classList.remove('desabilitar');
+      } else {
+        document.getElementById('bntMenuCadQuestao').classList.add('desabilitar');
+      }
+    }
+    function verificarSeHabilitaMenuProva() {
+      const questoes = carregarQuestoes();
+      if (questoes.length > 0) {
+        document.getElementById('bntMenuProva').classList.remove('desabilitar');
+      } else {
+        document.getElementById('bntMenuProva').classList.add('desabilitar');
+      }
+    }
+    verificarSeHabilitaMenuCadAula();
+    verificarSeHabilitaMenuCadQuestao();
+    verificarSeHabilitaMenuProva();
+  </script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('service-worker.js')
+        .then(() => console.log('Service Worker registrado!'));
+    }
+  </script>
+</body>
+
+</html>
