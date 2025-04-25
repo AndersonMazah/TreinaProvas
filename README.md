@@ -31,11 +31,14 @@ Fornecer um ambiente simples, leve e personalizável para prática de questões 
 
 📁 Estrutura do Projeto
 ```
-TreinaProvas-HTML/
-├── index.html       # Página principal com questões
-├── style.css        # Estilos personalizados (opcional)
-├── script.js        # Lógica de correção e interatividade (opcional)
-└── README.md        # Este arquivo
+TreinaProvas/
+src/
+   ├── css/               # Estilos css
+   ├── icons/             # Ícones
+   ├── js/                # Arquivos javascript
+   ├── index.html         # Página principal
+   ├── manifest.json      # Possibilita o site ser "instalável" funcionar offline
+   └── service-worker.js  # Possibilita o site ser "instalável" funcionar offline
 ```
 
 🤝 Contribuições
